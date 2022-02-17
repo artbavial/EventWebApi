@@ -1,8 +1,11 @@
-﻿namespace EventWebApi.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EventWebApi.Models
 {
     public class Event
     {
-        public int Id { get; set; }
+        [Key]
+        public int id { get; set; }
         public string EventName { get; set; }
         public string Organizer { get; set; }
         public DateTime StartTime { get; set; }
