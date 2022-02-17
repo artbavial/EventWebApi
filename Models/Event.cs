@@ -2,10 +2,8 @@
 
 namespace EventWebApi.Models
 {
-    public class Event
+    public class Event : BaseEntity
     {
-        [Key]
-        public int id { get; set; }
         public string EventName { get; set; }
         public string Organizer { get; set; }
         public DateTime StartTime { get; set; }

@@ -24,6 +24,13 @@ namespace EventWebApi.Controllers
             return db.Events.Find(id);
         }
 
+        // GET api/Event/Date,date
+        [HttpGet("SelectBetwentDates")]
+        public IEnumerable<Event> Get(DateTime start, DateTime end)
+        {
+            return db.Events.Where(d => d.StartTime>=start && d.StartTime<=end).ToList();
+        }
+
         // POST api/Event
         [HttpPost]
         public string Post([FromBody] Event _event)
