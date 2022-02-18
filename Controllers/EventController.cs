@@ -14,21 +14,30 @@ namespace EventWebApi.Controllers
         [HttpGet]
         public IEnumerable<Event> Get()
         {
-            return db.Events.ToList();
+            return db.Events;
         }
 
         // GET api/Event/5
         [HttpGet("{id}")]
-        public Event Get(int id)
+        public IActionResult Get(int id)
         {
-            return db.Events.Find(id);
+            var obj = db.Events.Find(id);
+            if (obj != null)
+            {
+
+                return Ok(obj);
+            }
+            else
+            {
+                return NotFound("Not Found");
+            }
         }
 
         // GET api/Event/Date,date
         [HttpGet("SelectBetwentDates")]
-        public IEnumerable<Event> Get(DateTime start, DateTime end)
+        public IEnumerable<Event> Get(DateTimeOffset start, DateTimeOffset end)
         {
-            return db.Events.Where(d => d.StartTime>=start && d.StartTime<=end).ToList();
+            return db.Events.Where(d => d.StartTime>=start.UtcDateTime && d.StartTime<=end.UtcDateTime);
         }
 
         // POST api/Event
@@ -37,7 +46,7 @@ namespace EventWebApi.Controllers
         {
             db.Events.Add(_event);
             db.SaveChanges();
-            return "Событие добавлено.";
+            return "Событие успешно добавлено.";
         }
 
         // PUT api/Event/5
@@ -63,7 +72,7 @@ namespace EventWebApi.Controllers
             var obj = db.Events.Find(id);
             db.Events.Remove(obj);
             db.SaveChanges();
-            return $"Событие с id{id} Успешно удалено";
+            return $"Событие с id{id} успешно удалено";
         }
     }
 }
